@@ -3,9 +3,12 @@ name: LT Prod Ready
 on:
   workflow_dispatch: {}
   schedule:
-    # Runs every 5 minutes on Sundays (UTC)
-    # This avoids DST issues. Your script should "bail" unless it's within your window.
-    - cron: "*/5 * * * 0"
+    - cron: "55 23 * * 0"
+    - cron: "55 0 * * 1"
+
+concurrency:
+  group: lt-prod-ready
+  cancel-in-progress: true
 
 jobs:
   run:
@@ -36,7 +39,6 @@ jobs:
           TZ: "America/New_York"
         run: node prodReady.js
 
-      # Upload artifacts on failure (screenshots, trace, logs if you save them)
       - name: Upload artifacts on failure
         if: failure()
         uses: actions/upload-artifact@v4
