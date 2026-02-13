@@ -4,15 +4,15 @@
   };
   
   // Sun=0 Mon=1 Tue=2 Wed=3 Thu=4 Fri=5 Sat=6
-  export const TARGET_WEEKDAY = 1; // Monday
+  export const TARGET_WEEKDAY = 6; // saturday
   export const TARGET_DAY_INDEX = TARGET_WEEKDAY;
   
   // Tile matching (make stricter if you want)
-  export const MUST_INCLUDE = ["8:00 PM", "Pickleball Open Play"];
+  export const MUST_INCLUDE = ["3:30 PM", "Pickleball Open Play"];
   
   // Reservation open time (local time)
   export const OPEN_TIME = {
-    hour: 22,
+    hour: 15,
     minute: 0,
     second: 0,
   };
