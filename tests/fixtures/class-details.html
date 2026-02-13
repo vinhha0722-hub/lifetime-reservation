@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <body>
+    <h1>Class Details</h1>
+    <div id="status">Reservation not open yet</div>
+    <button id="reserve" style="display:none;">Reserve</button>
+
+    <script>
+      // Simulate Reserve appearing after ~1.2s
+      setTimeout(() => {
+        document.getElementById("status").textContent = "Open";
+        document.getElementById("reserve").style.display = "inline-block";
+      }, 1200);
+
+      document.getElementById("reserve").onclick = () => {
+        window.location.href = "pending.html";
+      };
+    </script>
+  </body>
+</html>

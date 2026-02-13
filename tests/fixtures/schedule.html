@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <body>
+    <div id="cookie">
+      <button id="accept">Accept All</button>
+    </div>
+
+    <div class="calendar">
+      <div class="day"></div>
+      <div class="day" id="monday">
+        <div data-testid="classCell">
+          <a data-testid="classLink" href="class-details.html">Pickleball Open Play: All Levels</a>
+          <div>8:00 – 10:00 PM</div>
+        </div>
+      </div>
+      <div class="day"></div>
+      <div class="day"></div>
+      <div class="day"></div>
+      <div class="day"></div>
+      <div class="day"></div>
+    </div>
+
+    <script>
+      document.getElementById("accept").onclick = () => {
+        document.getElementById("cookie").remove();
+      };
+    </script>
+  </body>
+</html>
