@@ -26,13 +26,11 @@ import {
 const EMAIL = process.env[ENV.EMAIL];
 const PASSWORD = process.env[ENV.PASSWORD];
 
-// Set these in GitHub Actions env for dry runs
-const FORCE_RUN = String(process.env.FORCE_RUN || "").toLowerCase() === "true";
-const DRY_RUN = String(process.env.DRY_RUN || "").toLowerCase() === "true";
-
 async function run({ classDate, openAt }) {
   if (!EMAIL || !PASSWORD) {
-    throw new Error(`Missing ${ENV.EMAIL} or ${ENV.PASSWORD} environment variables.`);
+    throw new Error(
+      `Missing ${ENV.EMAIL} or ${ENV.PASSWORD} environment variables.`
+    );
   }
 
   const readyAt = new Date(openAt.getTime() - READY_MINUTES_BEFORE * 60000);
@@ -52,10 +50,9 @@ async function run({ classDate, openAt }) {
   console.log("Open at:", openAt.toString());
   console.log("Ready at:", readyAt.toString());
   console.log("Schedule URL:", scheduleUrl);
-  console.log("FORCE_RUN:", FORCE_RUN, "DRY_RUN:", DRY_RUN);
 
-  // Sleep until we want to start browser work
-  if (USE_WAIT_UNTIL_OPEN && !DRY_RUN) {
+  // Sleep until we want to start doing browser work
+  if (USE_WAIT_UNTIL_OPEN) {
     const msToReady = msUntilDateTime(readyAt);
     if (msToReady > 0) {
       console.log("Sleeping until ready time (ms):", msToReady);
@@ -91,20 +88,25 @@ async function run({ classDate, openAt }) {
 
     await dismissCookieBanner(page);
 
+    // Wait for schedule to render
     await page.locator('[data-testid="classCell"]').first().waitFor({
       state: "visible",
       timeout: 20000,
     });
 
+    // Find target day column
     const days = page.locator("div.calendar > div.day");
     const dayCount = await days.count();
     if (dayCount < 7) throw new Error("Could not find 7 day columns.");
 
     const targetCol = days.nth(TARGET_DAY_INDEX);
+
+    // Find target card in that day column
     const cards = targetCol.locator('[data-testid="classCell"]');
     const cardCount = await cards.count();
 
     let targetCard = null;
+
     for (let i = 0; i < cardCount; i++) {
       const text = await cards.nth(i).innerText();
       if (cardMatches(text, MUST_INCLUDE)) {
@@ -127,12 +129,8 @@ async function run({ classDate, openAt }) {
       classLink.click(),
     ]);
 
+    // Cookie banner can sometimes re-appear on details
     await dismissCookieBanner(page);
-
-    if (DRY_RUN) {
-      console.log("DRY_RUN=true: reached class details page successfully. Stopping before Reserve.");
-      return;
-    }
 
     console.log("On class details page. Waiting until open time...");
     if (USE_WAIT_UNTIL_OPEN) {
@@ -164,7 +162,7 @@ const openAt = computeOpenTimeForClass(
 );
 
 const now = new Date();
-if (!FORCE_RUN && !withinWindow(now, openAt)) {
+if (!withinWindow(now, openAt)) {
   console.log("Not in booking window. Exiting.");
   console.log("Now:", now.toString());
   console.log("OpenAt:", openAt.toString());

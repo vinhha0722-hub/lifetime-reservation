@@ -1,26 +1,14 @@
-// src/constants.js
-
 export const ENV = {
     EMAIL: "LT_EMAIL",
     PASSWORD: "LT_PASSWORD",
   };
   
-  // // Sun=0 Mon=1 Tue=2 Wed=3 Thu=4 Fri=5 Sat=6
-  // export const TARGET_WEEKDAY = 1; // Monday
-  // export const TARGET_DAY_INDEX = TARGET_WEEKDAY;
+  // Sun=0 Mon=1 Tue=2 Wed=3 Thu=4 Fri=5 Sat=6
+  export const TARGET_WEEKDAY = 1; // Monday
+  export const TARGET_DAY_INDEX = TARGET_WEEKDAY;
   
-  // // Tile matching (make stricter if you want)
-  // export const MUST_INCLUDE = ["8:00", "10:00", "Pickleball Open Play"];
-
-  export const TARGET_WEEKDAY = 5;      // Friday (Sun=0 ... Fri=5)
-  export const TARGET_DAY_INDEX = 5;    // Friday column
-
-  export const MUST_INCLUDE = [
-    "8:00",
-    "9:00",
-    "Pickleball Open Play",
-    "All Levels",
-  ];
+  // Tile matching (make stricter if you want)
+  export const MUST_INCLUDE = ["8:00", "10:00", "Pickleball Open Play"];
   
   // Reservation open time (local time)
   export const OPEN_TIME = {

@@ -37,8 +37,6 @@ jobs:
           LT_PASSWORD: ${{ secrets.LT_PASSWORD }}
           CI: "true"
           TZ: "America/New_York"
-          FORCE_RUN: "true"
-          DRY_RUN: "false"
         run: node prodReady.js
 
       - name: Upload artifacts on failure
