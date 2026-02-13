@@ -1,4 +1,4 @@
-export const ENV = {
+  export const ENV = {
     EMAIL: "LT_EMAIL",
     PASSWORD: "LT_PASSWORD",
   };

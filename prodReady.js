@@ -20,12 +20,16 @@ import {
   READY_MINUTES_BEFORE,
   USE_WAIT_UNTIL_OPEN,
   LOGIN_URL,
-  SCHEDULE_DEFAULTS,
+  SCHEDULE_DEFAULTS
 } from "./src/constants.js";
 
+
+// Credentails, pulled from GH SM
 const EMAIL = process.env[ENV.EMAIL];
 const PASSWORD = process.env[ENV.PASSWORD];
 
+
+// Main function
 async function run({ classDate, openAt }) {
   if (!EMAIL || !PASSWORD) {
     throw new Error(
@@ -120,7 +124,7 @@ async function run({ classDate, openAt }) {
       throw new Error("Could not find matching class card.");
     }
 
-    // Click into class details BEFORE open time, then wait there
+    // Click into class details BEFORE open time, then wait there - so we get the resy faster
     console.log("Clicking class (entering details page)...");
     const classLink = targetCard.locator('[data-testid="classLink"]').first();
 
@@ -129,7 +133,7 @@ async function run({ classDate, openAt }) {
       classLink.click(),
     ]);
 
-    // Cookie banner can sometimes re-appear on details
+    // Cookie banner might reappear, click and remove if so
     await dismissCookieBanner(page);
 
     console.log("On class details page. Waiting until open time...");
@@ -160,14 +164,6 @@ const openAt = computeOpenTimeForClass(
   OPEN_TIME.minute,
   OPEN_TIME.second
 );
-
-const now = new Date();
-if (!withinWindow(now, openAt)) {
-  console.log("Not in booking window. Exiting.");
-  console.log("Now:", now.toString());
-  console.log("OpenAt:", openAt.toString());
-  process.exit(0);
-}
 
 run({ classDate, openAt }).catch((err) => {
   console.error("Error:", err);
