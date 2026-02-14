@@ -8,9 +8,10 @@
   export const TARGET_DAY_INDEX = TARGET_WEEKDAY;
   
   // Tile matching (make stricter if you want)
-export const MUST_INCLUDE = ["5:00", "Pickleball Open Play: Intermediate"];  export const OPEN_TIME = {
-    hour: 19,
-    minute: 0,
+export const MUST_INCLUDE = ["6:30", "8:00","Pickleball Open Play: Beginner"];
+  export const OPEN_TIME = {
+    hour: 23,
+    minute: 57,
     second: 0,
   };
   
