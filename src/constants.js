@@ -4,14 +4,14 @@
   };
   
   // Sun=0 Mon=1 Tue=2 Wed=3 Thu=4 Fri=5 Sat=6
-  export const TARGET_WEEKDAY = 6; // saturday
+  export const TARGET_WEEKDAY = 1; // sunday
   export const TARGET_DAY_INDEX = TARGET_WEEKDAY;
   
   // Tile matching (make stricter if you want)
-export const MUST_INCLUDE = ["6:30", "8:00","Pickleball Open Play: Beginner"];
+export const MUST_INCLUDE = ["8:00", "10:00 PM", "Pickleball Open Play: Advanced"];
   export const OPEN_TIME = {
-    hour: 23,
-    minute: 57,
+    hour: 22,
+    minute: 0,
     second: 0,
   };
   
